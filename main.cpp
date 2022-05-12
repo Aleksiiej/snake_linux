@@ -16,7 +16,9 @@ int main()
 
     while (!isGameLost)
     {
-        currentButton = getchar();
+        std::cin.clear();
+        std::cin.ignore();
+        currentButton = std::cin.get();
         switch (currentButton)
         {
         case 'w':
@@ -31,13 +33,10 @@ int main()
         case 'd':
             player.setDirection(Direction::Right);
             break;
-        default:
-            break;
+        case 'q':
+            exit(0);
         }
-        if (currentButton == 'q')
-        {
-            break;
-        }
+
         player.changePosition();
         board.draw();
     }
