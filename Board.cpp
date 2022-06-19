@@ -8,7 +8,7 @@ Board::Board(std::shared_ptr<Food> ptrToFood, std::shared_ptr<Player> ptrToPlaye
 
 void Board::draw() noexcept
 {
-    system("cls");
+    system("clear");
     updateBoard();
     drawFrame();
     for (const auto& outerArray : board_)
