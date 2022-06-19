@@ -1,23 +1,28 @@
 #pragma once
-#include <iostream>
 #include <deque>
 #include "GlobalValues.hpp"
 #include "COORD.hpp"
-#include "Board.hpp"
+#include "Food.hpp"
 
 class Player
 {
 public:
     Player();
-    std::deque<COORD> getPlayer() const noexcept;
-    void setDirection(Direction newDirection) noexcept;
+
     void changePosition() noexcept;
-    void moveUp() noexcept;
-    void moveDown() noexcept;
-    void moveLeft() noexcept;
-    void moveRight() noexcept;
+    bool checkIfLost() const noexcept;
+    bool isFoodEaten() const noexcept;
+
+    const std::deque<COORD> &getPlayerRef() noexcept;
+    const Direction &getDirectionRef() const noexcept;
+    size_t getPlayerSize() const noexcept;
+
+    void setDirection(const Direction &newDirection) noexcept;
+    void setPointerToFood(const std::shared_ptr<Food> &) noexcept;
 
 private:
-    std::deque<COORD> player_;
     Direction currentDirection_;
+    COORD currentHead_;
+    std::deque<COORD> player_;
+    std::shared_ptr<Food> ptrToFood_;
 };

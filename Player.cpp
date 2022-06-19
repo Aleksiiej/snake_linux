@@ -1,18 +1,11 @@
 #include "Player.hpp"
 
-Player::Player() : currentDirection_(Direction::Right)
+Player::Player() : currentDirection_(Direction::Right), currentHead_(WIDTH/4, HEIGHT/2)
 {
-    player_.push_back(COORD(WIDTH / 4, HEIGHT / 2));
-}
-
-std::deque<COORD> Player::getPlayer() const noexcept
-{
-    return player_;
-}
-
-void Player::setDirection(Direction newDirection) noexcept
-{
-    currentDirection_ = newDirection;
+    for (int i = 0; i < 4; i++)
+    {
+        player_.push_back(COORD((WIDTH / 4) - i, HEIGHT / 2));
+    }
 }
 
 void Player::changePosition() noexcept
@@ -20,36 +13,78 @@ void Player::changePosition() noexcept
     switch (static_cast<int>(currentDirection_))
     {
     case 0:
-        moveUp();
+        player_.push_front({ currentHead_.coordX_, currentHead_.coordY_-- });
+        if (!isFoodEaten())
+        {
+            player_.pop_back();
+        }
         break;
     case 1:
-        moveDown();
+        player_.push_front({ currentHead_.coordX_, currentHead_.coordY_++ });
+        if (!isFoodEaten())
+        {
+            player_.pop_back();
+        }
         break;
     case 2:
-        moveLeft();
+        player_.push_front({ currentHead_.coordX_--, currentHead_.coordY_ });
+        if (!isFoodEaten())
+        {
+            player_.pop_back();
+        }
         break;
     case 3:
-        moveRight();
+        player_.push_front({ currentHead_.coordX_++, currentHead_.coordY_ });
+        if (!isFoodEaten())
+        {
+            player_.pop_back();
+        }
         break;
     }
 }
-
-void Player::moveUp() noexcept
+bool Player::checkIfLost() const noexcept
 {
-    player_.at(0).coordY_ -= 1;
+    for(const auto& el : player_)
+    {
+        if (currentHead_.coordX_ == el.coordX_ && currentHead_.coordY_ == el.coordY_)
+        {
+            return true;
+        }
+    }
+    if (currentHead_.coordX_ < 0 || currentHead_.coordX_ >= WIDTH || currentHead_.coordY_ < 0 || currentHead_.coordY_ >= HEIGHT)
+    {
+        return true;
+    }
+    return false;
+}
+bool Player::isFoodEaten() const noexcept
+{
+    if (player_.at(0).coordX_ == ptrToFood_->getCurrentLocationRef().coordX_ && player_.at(0).coordY_ == ptrToFood_->getCurrentLocationRef().coordY_)
+    {
+        ptrToFood_->changeFoodLocation();
+        return true;
+    }
+    return false;
 }
 
-void Player::moveDown() noexcept
+const std::deque<COORD>& Player::getPlayerRef()  noexcept
 {
-    player_.at(0).coordY_ += 1;
+    return player_;
+}
+const Direction& Player::getDirectionRef() const noexcept
+{
+    return currentDirection_;
+}
+size_t Player::getPlayerSize() const noexcept
+{
+    return player_.size();
 }
 
-void Player::moveLeft() noexcept
+void Player::setDirection(const Direction& newDirection) noexcept
 {
-    player_.at(0).coordX_ -= 1;
+    currentDirection_ = newDirection;
 }
-
-void Player::moveRight() noexcept
+void Player::setPointerToFood(const std::shared_ptr<Food>& ptrToFood) noexcept
 {
-    player_.at(0).coordX_ += 1;
+    ptrToFood_ = ptrToFood;
 }

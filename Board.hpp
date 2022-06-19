@@ -1,23 +1,25 @@
 #pragma once
 #include <iostream>
 #include <array>
+#include <iomanip>
 #include <memory>
-#include "GlobalValues.hpp"
+#include <algorithm>
 #include "Player.hpp"
-#include "COORD.hpp"
 
 class Player;
+class Food;
 
 class Board
 {
 public:
-    Board(Player &refToPlayer) : refToPlayer_(refToPlayer), board_{}
-    {
-    }
+    Board(std::shared_ptr<Food> ptrToFood, std::shared_ptr<Player> ptrToPlayer);
 
-    void draw() const noexcept;
+    void draw() noexcept;
+    void updateBoard() noexcept;
+    void drawFrame() const noexcept;
 
 private:
-    std::array<std::array<int, WIDTH>, HEIGHT> board_;
-    Player& refToPlayer_;
+    std::shared_ptr<Food> ptrToFood_;
+    std::shared_ptr<Player> ptrToPlayer_;
+    std::array<std::array<char, WIDTH>, HEIGHT> board_;
 };
