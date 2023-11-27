@@ -3,6 +3,8 @@
 ## Project Overview
 This project is a modern reinterpretation of the classic Snake game, developed in C++ using object-oriented programming principles. The focus of this project was to advance my C++ programming skills and tackle unique challenges, particularly in the area of input/output operations on the Linux platform.
 
+![image](https://github.com/Aleksiiej/snake_linux/assets/94867075/8f4e2994-4991-4fbd-bd70-0e282db3a16b)
+
 ## Key Features:
 - Object-Oriented Programming: Built using OOP methodologies in C++, ensuring a well-organized and maintainable code structure.
 - Linux System Compatibility: Specifically optimized for Linux, addressing unique challenges such as keyboard input handling in the absence of Windows-specific functions like getch().
@@ -10,7 +12,7 @@ This project is a modern reinterpretation of the classic Snake game, developed i
 - Development Environment: Developed in Visual Studio Code (VSCode) using CMake as the build system, showcasing proficiency in modern development tools and practices.
 
 ## Technical Stack:
-- Language: C++
+- Language: Modern C++ (11, 14, 17)
 - Development Tools: Visual Studio Code, CMake
 - Platform: Linux
 
